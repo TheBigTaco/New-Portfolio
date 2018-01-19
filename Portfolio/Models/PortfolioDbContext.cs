@@ -9,13 +9,13 @@ namespace Portfolio.Models
         {
 
         }
-        public override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<PortfolioUser>(entity =>
             {
-                entity.Property(mbox = mbox.Email).HasMaxLength(127);
+                entity.Property(m => m.Email).HasMaxLength(127);
                 entity.Property(m => m.NormalizedEmail).HasMaxLength(127);
                 entity.Property(m => m.UserName).HasMaxLength(127);
                 entity.Property(m => m.NormalizedUserName).HasMaxLength(127);
