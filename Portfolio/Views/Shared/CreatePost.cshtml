@@ -1,0 +1,17 @@
+﻿@model Portfolio.Models.Post
+
+<h1>Add Post</h1>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <p>
+        @Html.LabelFor(model => model.Title)
+        @Html.TextBoxFor(model => model.Title)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Content)
+        @Html.TextBoxFor(model => model.Content)
+    </p>
+
+    <input type="submit" value="Add Post" />
+}

@@ -4,3 +4,20 @@
 }
 
 <p>Posts go here</p>
+<p class="add-post">Add Post?</p>
+<div id="add-form"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.add-post').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: @Url.Action("CreatePost"),
+                success: function (result) {
+                    $('#add-form').html(result);
+                }
+            })
+        })
+    })
+</script>
