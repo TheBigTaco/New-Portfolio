@@ -13,7 +13,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'html',
-                url: @Url.Action("CreatePost"),
+                url: '@Url.Action("CreatePost")',
                 success: function (result) {
                     $('#add-form').html(result);
                 }
