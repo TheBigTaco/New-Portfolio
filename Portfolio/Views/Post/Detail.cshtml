@@ -1,0 +1,34 @@
+﻿@model Portfolio.ViewModels.PostComments
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Post.Title</h1>
+<p><small>@Model.Post.Date.ToString("MM/dd/yyyy")</small></p>
+<br>
+<p>@Model.Post.Content</p>
+@{ Model.Comment.Author = User.Identity.Name; }
+@using (Html.BeginForm(FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Comment.Author)
+    @Html.DisplayFor(model => model.Comment.ContentBody)
+    @Html.TextAreaFor(model => model.Comment.ContentBody)
+    @Html.HiddenFor(model => model.Comment.PostId)
+
+    <input type="submit" value="Add Comment" />
+}
+@foreach(var comment in Model.Post.Comments)
+{
+    <h4>@comment.Author</h4>
+    <p>@comment.ContentBody</p>
+    if(User.Identity.Name == @comment.Author)
+    {
+        <p>@Html.ActionLink("Edit", "Edit", "Comment")</p>
+    }
+    if(User.Identity.Name == @comment.Author || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+    {
+        <p>@Html.ActionLink("Delete", "Delete", "Comment")</p>
+    }
+}

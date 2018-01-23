@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace Portfolio.Models
         [Key]
         public int PostId { get; set; }
         public string Title { get; set; }
+        public DateTime Date { get; set; }
         public string Content { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
