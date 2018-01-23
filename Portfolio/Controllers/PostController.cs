@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Portfolio.Models;
-using Portfolio.ViewModels;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Portfolio.Models;
 
 namespace Portfolio.Controllers
 {
@@ -26,11 +23,13 @@ namespace Portfolio.Controllers
             return View(_db.Posts.ToList());
         }
 
+        [Authorize(Roles = "Administrator,Moderator")]
         public IActionResult CreatePost()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrator,Moderator")]
         [HttpPost]
         public IActionResult CreatePost(Post post)
         {

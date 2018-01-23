@@ -12,5 +12,12 @@ namespace Portfolio.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public int Truncate()
+        {
+            char[] splitChar = { '.','!','?' };
+            string[] splitContent = this.Content.Split(splitChar);
+            return splitContent[0].Length;
+        }
     }
 }

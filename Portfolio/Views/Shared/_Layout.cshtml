@@ -17,10 +17,14 @@
             {
                 <input type="submit" class="btn btn-default" value="Log out" />
             }
+			if(User.IsInRole("Administrator"))
+			{
+			    <p>@Html.ActionLink("Role", "Index", "Role")</p>
+			}
         }
         else
         {
-            <p>@Html.ActionLink("Register", "Register", "Account") | @Html.ActionLink("Login", "Login", "Account") | @Html.ActionLink("Role", "Index", "Role")</p>
+            <p>@Html.ActionLink("Register", "Register", "Account") | @Html.ActionLink("Login", "Login", "Account")</p>
         }
         <hr />
         @RenderBody()
