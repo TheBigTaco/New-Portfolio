@@ -10,7 +10,7 @@
 <br>
 <p>@Model.Post.Content</p>
 @{ Model.Comment.Author = User.Identity.Name; }
-@using (Html.BeginForm(FormMethod.Post))
+@using (Html.BeginForm("Detail"))
 {
     @Html.HiddenFor(model => model.Comment.Author)
     @Html.DisplayFor(model => model.Comment.ContentBody)
@@ -21,14 +21,35 @@
 }
 @foreach(var comment in Model.Post.Comments)
 {
+    <div class="confirm-delete-@(@comment.CommentId)">
     <h4>@comment.Author</h4>
     <p>@comment.ContentBody</p>
-    if(User.Identity.Name == @comment.Author)
+    @if(User.Identity.Name == @comment.Author || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
     {
-        <p>@Html.ActionLink("Edit", "Edit", "Comment")</p>
+        <form class="delete-comment">
+            <input type="hidden" name="id" value="@comment.CommentId" />
+            <button type="submit">Delete Comment</button>
+        </form>
     }
-    if(User.Identity.Name == @comment.Author || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-    {
-        <p>@Html.ActionLink("Delete", "Delete", "Comment")</p>
-    }
+	</div>
 }
+@Html.ActionLink("Blog", "Index")
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.delete-comment').submit(function(event){
+	        event.preventDefault();
+	        var x = $(this).serialize();
+	        $.ajax({
+	            url: '@Url.Action("Delete")' ,
+	            type: 'POST',
+	            data: $(this).serialize(),
+	            success: function(result) {
+	                $('.confirm-delete-' + result).html("Comment Deleted");
+	                setTimeout(function() {
+	                    $('.confirm-delete-' + result).html("");
+	                }, 3000);
+	            }
+	        })
+	    })
+	})
+</script>

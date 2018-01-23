@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
 using Portfolio.ViewModels;
@@ -42,9 +45,9 @@ namespace Portfolio.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Detail(int PostId)
+        public IActionResult Detail(int id)
         {
-            Post thisPost = _db.Posts.Include(p => p.Comments).FirstOrDefault(x => x.PostId == PostId);
+            Post thisPost = _db.Posts.Include(p => p.Comments).FirstOrDefault(x => x.PostId == id);
             return View(new PostComments(thisPost));
         }
 
@@ -53,7 +56,16 @@ namespace Portfolio.Controllers
         {
             _db.Comments.Add(comment);
             _db.SaveChanges();
-            return RedirectToAction("Detail", new { PostId = comment.PostId });
+            return RedirectToAction("Detail", new { id = comment.PostId });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            Comment thisComment = _db.Comments.FirstOrDefault(x => x.CommentId == id);
+            _db.Comments.Remove(thisComment);
+            _db.SaveChanges();
+            return Content(id.ToString());
         }
     }
 }

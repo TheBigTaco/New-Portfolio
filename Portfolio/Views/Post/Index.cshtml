@@ -26,7 +26,8 @@
 
 @foreach(var post in Model)
 {
-    <h2><a href='@Url.Action("Detail", new {PostId = post.PostId})'>@post.Title</a></h2>
+    string Title = @post.Title;
+    <h2>@Html.ActionLink(Title, "Detail", new { id = @post.PostId})</h2>
     <p><small>@post.Date.ToString("MM/dd/yyyy")</small></p>
     <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
 }
