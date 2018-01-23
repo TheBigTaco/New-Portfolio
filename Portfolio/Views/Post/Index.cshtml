@@ -4,7 +4,7 @@
 }
 
 <p>Posts go here</p>
-<p class="add-post">Add Post?</p>
+<p class="add-post">Add Post</p>
 <div id="add-form"></div>
 
 <script type="text/javascript">
@@ -21,3 +21,9 @@
         })
     })
 </script>
+
+@foreach(var post in Model)
+{
+    <h2>@post.Title</h2>
+    <p>@post.Content</p>
+}

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.ViewModels;
 using Microsoft.AspNetCore.Identity;
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Portfolio.Controllers
 {
@@ -24,12 +23,20 @@ namespace Portfolio.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_db.Posts.ToList());
         }
 
         public IActionResult CreatePost()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePost(Post post)
+        {
+            _db.Posts.Add(post);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

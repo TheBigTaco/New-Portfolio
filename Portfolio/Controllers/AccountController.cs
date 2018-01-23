@@ -38,10 +38,11 @@ namespace Portfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new PortfolioUser { UserName = model.Email };
+            var user = new PortfolioUser { UserName = model.UserName, Email = model.Email };
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if(result.Succeeded)
             {
+				await _userManager.AddToRoleAsync(user, "User");
                 return RedirectToAction("Index", "Home", null);
             }
             else
@@ -58,7 +59,7 @@ namespace Portfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, isPersistent: true, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home", null);
