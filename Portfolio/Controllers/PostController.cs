@@ -45,6 +45,15 @@ namespace Portfolio.Controllers
             return RedirectToAction("Index");
         }
 
+		[HttpPost]
+		public IActionResult DeletePost(int id)
+		{
+			Post thisPost = _db.Posts.FirstOrDefault(x => x.PostId == id);
+			_db.Posts.Remove(thisPost);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
         public IActionResult Detail(int id)
         {
             Post thisPost = _db.Posts.Include(p => p.Comments).FirstOrDefault(x => x.PostId == id);
@@ -52,15 +61,16 @@ namespace Portfolio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Detail(Comment comment)
+        public IActionResult AddComment(Comment comment)
         {
             _db.Comments.Add(comment);
             _db.SaveChanges();
             return RedirectToAction("Detail", new { id = comment.PostId });
         }
 
+
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteComment(int id)
         {
             Comment thisComment = _db.Comments.FirstOrDefault(x => x.CommentId == id);
             _db.Comments.Remove(thisComment);

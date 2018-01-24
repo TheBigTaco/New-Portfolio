@@ -10,14 +10,17 @@
 <br>
 <p>@Model.Post.Content</p>
 @{ Model.Comment.Author = User.Identity.Name; }
-@using (Html.BeginForm("Detail"))
+@if(User.Identity.IsAuthenticated)
 {
-    @Html.HiddenFor(model => model.Comment.Author)
-    @Html.DisplayFor(model => model.Comment.ContentBody)
-    @Html.TextAreaFor(model => model.Comment.ContentBody)
-    @Html.HiddenFor(model => model.Comment.PostId)
+    using (Html.BeginForm("AddComment", "Post"))
+    {
+        @Html.HiddenFor(model => model.Comment.Author)
+        @Html.DisplayFor(model => model.Comment.ContentBody)
+        @Html.TextAreaFor(model => model.Comment.ContentBody)
+        @Html.HiddenFor(model => model.Comment.PostId)
 
-    <input type="submit" value="Add Comment" />
+        <input type="submit" value="Add Comment" />
+    }
 }
 @foreach(var comment in Model.Post.Comments)
 {
@@ -40,7 +43,7 @@
 	        event.preventDefault();
 	        var x = $(this).serialize();
 	        $.ajax({
-	            url: '@Url.Action("Delete")' ,
+	            url: '@Url.Action("DeleteComment")' ,
 	            type: 'POST',
 	            data: $(this).serialize(),
 	            success: function(result) {

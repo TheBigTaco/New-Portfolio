@@ -11,17 +11,24 @@
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
+    <p>
     @Html.LabelFor(user => user.UserName)
     @Html.TextBoxFor(user => user.UserName)
-
-    @Html.LabelFor(user => user.Email)
+    </p>
+    <p>
+    @Html.LabelFor(user => user.Email) (Not Required)
     @Html.TextBoxFor(user => user.Email)
-
+	</p>
+    <p>
     @Html.LabelFor(user => user.Password)
     @Html.PasswordFor(user => user.Password)
-
+	</p>
+    <p>
     @Html.LabelFor(user => user.ConfirmPassword)
     @Html.PasswordFor(user => user.ConfirmPassword)
+	</p>
 
     <input type="submit" value="Register" />
 }
+
+@Html.ActionLink("Home", "Index", "Home")
