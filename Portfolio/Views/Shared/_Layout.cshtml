@@ -9,24 +9,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 <body>
-    <div>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <p>Hello @User.Identity.Name!</p>
-            using (Html.BeginForm("LogOff", "Account"))
+    <div class="header">
+        <div class="account">
+            @if (User.Identity.IsAuthenticated)
             {
-                <input type="submit" class="btn btn-default" value="Log out" />
+                <p>Hello @User.Identity.Name!</p>
+                using (Html.BeginForm("LogOff", "Account"))
+                {
+                    <input type="submit" class="btn btn-default" value="Log out" />
+                }
             }
-			if(User.IsInRole("Administrator"))
-			{
-			    <p>@Html.ActionLink("Role", "Index", "Role")</p>
-			}
-        }
-        else
+            else
+            {
+                <p>@Html.ActionLink("Register", "Register", "Account") | @Html.ActionLink("Login", "Login", "Account")</p>
+            }
+        </div>
+        <div class="links">
+			<div class="logo">
+                <a href="/"><img src="/images/taco.png"></a>
+            </div>
+            <p> @Html.ActionLink("Blog", "Index", "Post")</p>
+            <p> @Html.ActionLink("About Me", "About", "Home") </p>
+            <p> @Html.ActionLink("Contact Page", "Contact", "Home")</p>
+        @if(User.IsInRole("Administrator"))
         {
-            <p>@Html.ActionLink("Register", "Register", "Account") | @Html.ActionLink("Login", "Login", "Account")</p>
+            <p class="role">@Html.ActionLink("Role", "Index", "Role")</p>
         }
+        </div>
+	</div>
         <hr />
+	<div class="container">
         @RenderBody()
     </div>
 </body>
