@@ -45,6 +45,23 @@ namespace Portfolio.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administrator,Moderator")]
+        public IActionResult EditPost(int id)
+        {
+            Post thisPost = _db.Posts.FirstOrDefault(x => x.PostId == id);
+            return View(thisPost);
+        }
+
+        [Authorize(Roles = "Administrator,Moderator")]
+        [HttpPost]
+        public IActionResult EditPost(Post post)
+        {
+            _db.Entry(post).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Administrator,Moderator")]
 		[HttpPost]
 		public IActionResult DeletePost(int id)
 		{

@@ -1,0 +1,16 @@
+﻿@model Portfolio.Models.Post
+
+@{
+    ViewData["Title"] = "Log In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EditPost", "Post"))
+{
+    @Html.HiddenFor(model => model.PostId)
+    @Html.HiddenFor(model => model.Date)
+    @Html.DisplayFor(model => model.Title)
+    @Html.TextBoxFor(model => model.Title)
+    @Html.TextAreaFor(model => model.Content, 40, 100, null)
+    <input type="submit" value="Edit Post" />
+}

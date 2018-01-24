@@ -32,7 +32,8 @@
     <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
     if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
     {
-        using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId}))
+        @Html.ActionLink("Edit This Post", "EditPost", new { id = @post.PostId })
+        using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId }))
         {
             <input type="submit" value="Delete This Post" />
         }
