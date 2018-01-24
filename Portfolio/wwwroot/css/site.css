@@ -51,3 +51,24 @@
     display: flex;
     justify-content: center;
 }
+
+.posts {
+    margin: 5px;
+    border: solid black 1px;
+    height: 200px;
+    width: 280px;
+}
+
+.posts a {
+    text-decoration: none;
+}
+
+.post-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+}

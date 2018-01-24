@@ -4,39 +4,43 @@
     ViewData["Title"] = "Blog Posts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="details">
+    <h1>@Model.Post.Title</h1>
+    <p><small>@Model.Post.Date.ToString("MM/dd/yyyy")</small></p>
+    <br>
+    <pre>@Model.Post.Content</pre>
+    <div class="post-details">
+        @{ Model.Comment.Author = User.Identity.Name; }
+        @if(User.Identity.IsAuthenticated)
+        {
+            using (Html.BeginForm("AddComment", "Post"))
+            {
+                @Html.HiddenFor(model => model.Comment.Author)
+                @Html.DisplayFor(model => model.Comment.ContentBody)
+                @Html.TextAreaFor(model => model.Comment.ContentBody)
+                @Html.HiddenFor(model => model.Comment.PostId)
 
-<h1>@Model.Post.Title</h1>
-<p><small>@Model.Post.Date.ToString("MM/dd/yyyy")</small></p>
-<br>
-<pre>@Model.Post.Content</pre>
-@{ Model.Comment.Author = User.Identity.Name; }
-@if(User.Identity.IsAuthenticated)
-{
-    using (Html.BeginForm("AddComment", "Post"))
-    {
-        @Html.HiddenFor(model => model.Comment.Author)
-        @Html.DisplayFor(model => model.Comment.ContentBody)
-        @Html.TextAreaFor(model => model.Comment.ContentBody)
-        @Html.HiddenFor(model => model.Comment.PostId)
-
-        <input type="submit" value="Add Comment" />
-    }
-}
-@foreach(var comment in Model.Post.Comments)
-{
-    <div class="confirm-delete-@(@comment.CommentId)">
-    <h4>@comment.Author</h4>
-    <p>@comment.ContentBody</p>
-    @if(User.Identity.Name == @comment.Author || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-    {
-        <form class="delete-comment">
-            <input type="hidden" name="id" value="@comment.CommentId" />
-            <button type="submit">Delete Comment</button>
-        </form>
-    }
-	</div>
-}
-@Html.ActionLink("Blog", "Index")
+                <input type="submit" value="Add Comment" />
+            }
+        }
+    </div>
+    <div class="comments">
+        @foreach(var comment in Model.Post.Comments)
+        {
+            <div class="confirm-delete-@(@comment.CommentId)">
+            <h4>@comment.Author</h4>
+            <p>@comment.ContentBody</p>
+            @if(User.Identity.Name == @comment.Author || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+            {
+                <form class="delete-comment">
+                    <input type="hidden" name="id" value="@comment.CommentId" />
+                    <button type="submit">Delete Comment</button>
+                </form>
+            }
+        	</div>
+        }
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         $('.delete-comment').submit(function(event){

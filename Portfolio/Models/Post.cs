@@ -19,6 +19,10 @@ namespace Portfolio.Models
         {
             char[] splitChar = { '.','!','?' };
             string[] splitContent = this.Content.Split(splitChar);
+            if(splitContent[0].Length >= 40)
+            {
+                return 30;
+            }
             return splitContent[0].Length;
         }
     }

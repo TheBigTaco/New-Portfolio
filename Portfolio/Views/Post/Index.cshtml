@@ -23,19 +23,20 @@
         })
     })
 </script>
-
 @foreach(var post in Model)
 {
-    string Title = @post.Title;
-    <h2>@Html.ActionLink(Title, "Detail", new { id = @post.PostId})</h2>
-    <p><small>@post.Date.ToString("MM/dd/yyyy")</small></p>
-    <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
-    if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-    {
-        @Html.ActionLink("Edit This Post", "EditPost", new { id = @post.PostId })
-        using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId }))
+        string Title = @post.Title;
+    <div class="posts">
+        <h2>@Html.ActionLink(Title, "Detail", new { id = @post.PostId})</h2>
+        <p><small>@post.Date.ToString("MM/dd/yyyy")</small></p>
+        <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
+        @if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
         {
-            <input type="submit" value="Delete This Post" />
+            @Html.ActionLink("Edit This Post", "EditPost", new { id = @post.PostId })
+            using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId }))
+            {
+                <input type="submit" value="Delete This Post" />
+            }
         }
-    }
+    </div>
 }
