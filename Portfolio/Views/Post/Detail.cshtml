@@ -8,7 +8,7 @@
 <h1>@Model.Post.Title</h1>
 <p><small>@Model.Post.Date.ToString("MM/dd/yyyy")</small></p>
 <br>
-<p>@Model.Post.Content</p>
+<pre>@Model.Post.Content</pre>
 @{ Model.Comment.Author = User.Identity.Name; }
 @if(User.Identity.IsAuthenticated)
 {
