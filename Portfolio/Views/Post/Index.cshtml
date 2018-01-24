@@ -2,13 +2,32 @@
     ViewData["Title"] = "Blog Posts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-{
-<input class="add-post" type="button" value="Add Post" />
-<div id="add-form"></div>
-}
-
+<div class="post-list">
+    @foreach(var post in Model)
+    {
+            string Title = @post.Title;
+        <div class="posts">
+            <h2>@Html.ActionLink(Title, "Detail", new { id = @post.PostId})</h2>
+            <p><small>@post.Date.ToString("MM/dd/yyyy")</small></p>
+            <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
+            @if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+            {
+                @Html.ActionLink("Edit This Post", "EditPost", new { id = @post.PostId })
+                using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId }))
+                {
+                    <input type="submit" value="Delete This Post" />
+                }
+            }
+        </div>
+    }
+</div>
+<div class="add-post-form">
+    @if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+    {
+    <input class="add-post" type="button" value="Add Post" />
+    <div id="add-form"></div>
+    }
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.add-post').click(function () {
@@ -23,20 +42,3 @@
         })
     })
 </script>
-@foreach(var post in Model)
-{
-        string Title = @post.Title;
-    <div class="posts">
-        <h2>@Html.ActionLink(Title, "Detail", new { id = @post.PostId})</h2>
-        <p><small>@post.Date.ToString("MM/dd/yyyy")</small></p>
-        <p>@post.Content.Substring(0, Math.Min(post.Content.Length, post.Truncate()))...</p>
-        @if(User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-        {
-            @Html.ActionLink("Edit This Post", "EditPost", new { id = @post.PostId })
-            using (Html.BeginForm("DeletePost", "Post", new { id = @post.PostId }))
-            {
-                <input type="submit" value="Delete This Post" />
-            }
-        }
-    </div>
-}
