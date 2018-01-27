@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Portfolio.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Portfolio.Controllers
 {
@@ -9,9 +12,10 @@ namespace Portfolio.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Projects()
         {
-            return View();
+            List<Repository> topStarredRepos = await ApiContext.TopThreeRepos();
+            return View(topStarredRepos);
         }
 
         public IActionResult Contact()

@@ -1,0 +1,13 @@
+﻿@model List<Portfolio.Models.Repository>
+
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>Top Projects</p>
+
+@foreach (var project in Model)
+{
+    <p>@Html.DisplayFor(modelItem => project.Name)</p>
+}

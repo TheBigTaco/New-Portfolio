@@ -13,6 +13,7 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="RestSharp.NetCore" Version="105.2.3" />
   </ItemGroup>
 
   <ItemGroup>
