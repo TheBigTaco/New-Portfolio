@@ -44,6 +44,7 @@
     flex-direction: column;
     align-content:flex-end;
     text-align: right;
+    margin: 3px;
 }
 
 .account a {
@@ -67,7 +68,8 @@
     padding: 5px;
     border: solid black 1px;
     height: 200px;
-    width: 280px;
+    width: 320px;
+    background-color: grey;
 }
 
 .posts a {
@@ -92,6 +94,7 @@
     width: 100%;
     flex-direction: row;
     align-content: center;
+    align-self: center;
 }
 
 .add-post-form {
@@ -102,4 +105,30 @@
 .edit-post {
     background-color: blue;
     border: solid green 1px;
+}
+
+.me {
+    display: flex;
+    height: 300px;
+    width: 400px;
+}
+
+.my-stuff {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: grey;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: grey;
 }
